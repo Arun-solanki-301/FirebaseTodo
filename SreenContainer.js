@@ -15,9 +15,9 @@ const ScreenContainer = () =>{
     return(
     <NavigationContainer>
     <Stack.Navigator>
+      <Stack.Screen name="OTP" component={OtpScreen} />
       <Stack.Screen name="User info" component={UserInfo} />
       <Stack.Screen name="ContactInfo" component={ContactInfo} />
-      <Stack.Screen name="OTP" component={OtpScreen} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="SignUp" component={SignUp} />
       <Stack.Screen name="Home" component={Deshboard}  options={{ headerShown: false }}/>

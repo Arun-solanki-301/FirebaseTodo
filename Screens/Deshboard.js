@@ -2,7 +2,7 @@ import React , {useEffect, useState} from "react";
 import {View , Text, TouchableOpacity , TextInput , StyleSheet , ActivityIndicator , ScrollView} from 'react-native'
 import { SendButton } from "react-native-fbsdk";
 
-import { SafeAreaView } from "react-native-safe-area-context";
+// import { SafeAreaView } from "react-native-safe-area-context";
 import TodoComp from "../Component/TodoComp";
 import axios from "axios";
 // import { ScrollView } from "react-native-gesture-handler";
@@ -67,6 +67,8 @@ const Deshboard = ({navigation})=>{
             </ScrollView>
 
             {loading && <ActivityIndicator size="large" color="#ff8000ed" />}
+
+            <TouchableOpacity style={{backgroundColor :"blue"}} onPress={()=>navigation.navigate('ContactInfo')}><Text style={{fontSize : 25 , textAlign : "center" , color:"#fff"}}>Add contact details</Text></TouchableOpacity>
 
         </View>
         </View>

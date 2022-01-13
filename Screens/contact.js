@@ -49,6 +49,7 @@ const ContactInfo = ({ navigation }) => {
     }
     return (
         <View style={styles.container}>
+            <TouchableOpacity style={{backgroundColor :"blue"}} onPress={()=>navigation.navigate('User info')}><Text style={{fontSize : 25 , textAlign : "center" , color:"#fff"}}>all users</Text></TouchableOpacity>
             <Text style={styles.headerText}>Contact Information</Text>
             <TextInput placeholder="UserName" value={user.username} style={styles.InputType} placeholderTextColor={'#ff8000ed'} onChangeText={(text)=> handleInputs(text , "username")}/>
             <TextInput placeholder="Email" value={user.email} style={styles.InputType} placeholderTextColor={'#ff8000ed'} onChangeText={(text)=>handleInputs(text , "email")}/>
