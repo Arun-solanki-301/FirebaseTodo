@@ -1,5 +1,5 @@
 import React  , {useState} from "react";
-import {View , Text, TouchableOpacity , TextInput , StyleSheet} from 'react-native';
+import {View , Text, TouchableOpacity , TextInput , StyleSheet , ActivityIndicator} from 'react-native';
 
 const TodoComp = ({item})=>{
     const [Btn, setBtn] = useState(false);
@@ -10,6 +10,7 @@ const TodoComp = ({item})=>{
         <View  style={{display :"flex" , flexDirection : "row" ,marginTop : 10 }} key={item.id}>
                 <TouchableOpacity style={Btn ? styles.btnActivationTrue : styles.btnActivationFalse} onPress={()=>hanclechecks(item)}><Text></Text></TouchableOpacity>
                 <Text style={{width : "90%" , marginLeft : 10 , fontSize : 22}}>{item.title}</Text>
+               
             </View>
     )
 }

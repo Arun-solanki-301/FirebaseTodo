@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import {View , Text, TextInput , StyleSheet , TouchableOpacity} from 'react-native'
 import auth from '@react-native-firebase/auth';
-// https://myfirebaseapp1-9cb9d.firebaseapp.com/__/auth/handler
 import {
     GoogleSignin,
     GoogleSigninButton,
     statusCodes,
   } from '@react-native-google-signin/google-signin';
-    //  import com.facebook.FacebookSdk;
-    // import com.facebook.appevents.AppEventsLogger;
+
 
 
 const OtpScreen =({navigation})=>{
@@ -18,6 +16,7 @@ const OtpScreen =({navigation})=>{
     const [otpscreen, setOtpScreen] = useState(false);
     const [confirmOtp , setConfirmOtp] = useState("")
     const [userinfo , setuserInfo] = useState("")
+   const [otpGenrate , setOtpGenrate] = useState(false)
 
 
     useEffect(()=>{
@@ -34,7 +33,7 @@ const OtpScreen =({navigation})=>{
         try {
           await GoogleSignin.hasPlayServices();
           const userInfo = await GoogleSignin.signIn();
-          console.log(userInfo, 'userInfo+++++++++++++');
+        //   console.log(userInfo, 'userInfo+++++++++++++');
           navigation.navigate("Home")   
         //   this.setuserInfo({ userInfo });
         } catch (error) {
@@ -53,13 +52,15 @@ const OtpScreen =({navigation})=>{
         }
     }
 
-console.log(confirmOtp)
+// console.log(confirmOtp)
     async function signInWithPhoneNumber(phone) {
         try {
             const confirmation = await auth().signInWithPhoneNumber(phone);
             setConfirm(confirmation);
             setOtpScreen(true)
-            console.log(confirmation)
+            setOtpGenrate(true)
+            // console.log(confirmation);
+            // setScr(true)
           } catch (error) {
             error
             console.log(error)
@@ -70,7 +71,7 @@ console.log(confirmOtp)
         try {
             await confirm.confirm(confirmOtp);
             // setConfirmOtp(null);
-            console.log("successssssssssss")
+            // console.log("successssssssssss")
             navigation.navigate('Home')
 
           } catch (error) {
@@ -84,66 +85,42 @@ console.log(confirmOtp)
           await GoogleSignin.signOut();
         //   setloggedIn(false);
         //   setuserInfo([]);
-          console.log('sign out successssssssssss')
+        //   console.log('sign out successssssssssss')
         } catch (error) {
           console.error(error);
         }
       };
      
 
-    //   async function signIn() {
-    //     try {
-      
-    //         const result = await LoginManager.logInWithPermissions([
-    //             'public_profile',
-    //             'email',
-    //           ]);
-
-    //           if (result.isCancelled) {
-    //             throw 'User cancelled the login process';
-    //           }
-    //           const data = await AccessToken.getCurrentAccessToken();
-    //           if (!data) {
-    //             throw 'Something went wrong obtaining access token';
-    //           }
-    //           const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
-    //           return auth().signInWithCredential(facebookCredential);
-      
-    //     } catch (error) {
-    //       alert(error);
-    //     }
-    //   }
-
-
-
-
-
     return(
         <View >
 
-        <View style={styles.container}>
+       <View style={styles.container}>
             <View style={{display : "flex"}}>
-            {/* <TextInput placeholder="+91" value={countryCode} style={styles.InputTypeB} placeholderTextColor={'#ff8000ed'} onChangeText={(e)=>setCountryCode(e)} /> */}
+            
             <TextInput placeholder="Phone Number" value={phoneNumber} style={styles.InputType} placeholderTextColor={'#ff8000ed'} onChangeText={(e)=>setPhoneNumber(e)} />
             </View>
             <View style={{display : "flex", flexDirection :"row" , justifyContent : "center"}}>
             <TouchableOpacity style={styles.FormBtn} onPress={genrateOtp}><Text style={styles.FormBtnText}>Phone Number</Text></TouchableOpacity>
             </View>
         </View> 
-
+        
         <View style={styles.container}>
          <View style={{display : "flex"}}>
         <TextInput placeholder="OTP ...." value={confirmOtp} style={styles.InputType} placeholderTextColor={'#ff8000ed'} onChangeText={(e)=>setConfirmOtp(e)} />
         </View>
         <View style={{display : "flex", flexDirection :"row" , justifyContent : "center"}}>
-        <TouchableOpacity style={styles.FormBtn} onPress={()=>confirmVerificationCode(confirmOtp)}><Text style={styles.FormBtnText}>confirm otp</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.FormBtn} onPress={()=>confirmVerificationCode(confirmOtp)}><Text style={styles.FormBtnText} disabled={otpGenrate}>confirm otp</Text></TouchableOpacity>
         </View> 
         </View>
 
         <View style={{display :"flex" , justifyContent : "center" , flexDirection : "row"}}><TouchableOpacity style={styles.googleBtn} onPress={_googleSignIn}><Text style={styles.FormText}>sign in with google</Text></TouchableOpacity></View> 
         <View style={{display :"flex" , justifyContent : "center" , flexDirection : "row"}}><TouchableOpacity style={styles.googleBtn} onPress={_googleSignOut}><Text style={styles.FormText}>sign out</Text></TouchableOpacity></View>
-        {/* <View style={{display :"flex" , justifyContent : "center" , flexDirection : "row"}}><TouchableOpacity style={styles.googleBtn} onPress={signIn}><Text style={styles.FormText}>facebook</Text></TouchableOpacity></View> */}
-
+        <View style={styles.container}>
+        <View style={{display :"flex" , justifyContent : "space-between" , flexDirection : "row" , marginTop : 20}}>
+        <TouchableOpacity style={{width : 180 , backgroundColor : "red"}} onPress={()=>navigation.navigate('Login')} ><Text style={{color : "#fff" , textAlign : "center", fontSize : 18}}>Login with username</Text></TouchableOpacity> 
+        <TouchableOpacity style={{width : 100, backgroundColor : "red"}} onPress={()=>navigation.navigate('SignUp')}><Text style={{color : "#fff" , textAlign : "center", fontSize : 18}}>Sign up</Text></TouchableOpacity></View>
+        </View>
         </View>
     )
 }

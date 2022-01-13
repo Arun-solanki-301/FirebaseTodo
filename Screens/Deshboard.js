@@ -1,56 +1,81 @@
-import React , {useState} from "react";
-import {View , Text, TouchableOpacity , TextInput , StyleSheet} from 'react-native'
+import React , {useEffect, useState} from "react";
+import {View , Text, TouchableOpacity , TextInput , StyleSheet , ActivityIndicator , ScrollView} from 'react-native'
 import { SendButton } from "react-native-fbsdk";
-// import { TextInput } from "react-native-gesture-handler";
+
 import { SafeAreaView } from "react-native-safe-area-context";
 import TodoComp from "../Component/TodoComp";
+import axios from "axios";
+// import { ScrollView } from "react-native-gesture-handler";
+
 
 const Deshboard = ({navigation})=>{
     const [TodoInput , setTodoInput] = useState("")
-    const [newTodo, setnewTodo] = useState([]);
+    const [data , setData] = useState([]);
+    const [loading , setLoading] = useState(false)
    
-
+    const Url = "https://myfirebaseapp1-9cb9d-default-rtdb.firebaseio.com/MyfirebaseApp.json";
     const obj = {
         title: TodoInput, checked: false, id: Math.random()
     }
 
+    useEffect(()=>{
+        getDataFrom()
+    })
     const AddTodo = () =>{
-        let newArr = Object.assign([], newTodo);
+       
         if(TodoInput){
-            newArr.push(obj)  
+            setLoading(true)
+            PostDataToFirebase()
+            getDataFrom()
         }
-        // console.log(TodoArray , "fghjkgsjdbajskghdu")
-        setnewTodo(newArr);
         setTodoInput("")
     }
     
+    
+    console.log(data)
 
-console.log(newTodo , "new todo")
+    const PostDataToFirebase = async () => {
+        const response = await axios.post(Url , JSON.stringify(
+            obj,
+        ))
+       
+    }
 
-
+    const getDataFrom = async ()=>{
+        const res = await axios.get(Url)
+        setData(Object.values(res.data))
+        setLoading(false)
+    }
 
     return(
-        <View style={{marginVertical : 15}}>
+        
+        <View style={{marginVertical : 20 }} >
             <Text style={{color : "#cacaca" , fontSize : 35, backgroundColor:"blue" , textAlign : "center" }}>Write your task Here</Text>
         <View style={styles.container}>
             <View style={{display : "flex", flexDirection:"row" , alignItems : "center"}}>
             <TextInput placeholder="Write Here" value={TodoInput} style={styles.InputType} placeholderTextColor={'#ff8000ed'} onChangeText={(e)=>setTodoInput(e)} />
                 <TouchableOpacity style={styles.FormBtn} onPress={AddTodo}><Text style={styles.FormBtnText}>ADD</Text></TouchableOpacity>
             </View>
+            <Text style={{fontSize : 40, color : "#000" , fontWeight : "800", marginBottom : 20}}>My List</Text>
 
-
-            {newTodo.map((item) => {
+            <ScrollView height={285}>
+            {data?.map((item , index) => {
                 return (
-                    <TodoComp item = {item}/>
+                    <TodoComp item = {item} key={item.id} data={data} loading={loading}/>
                 )
             })}
+            </ScrollView>
+
+            {loading && <ActivityIndicator size="large" color="#ff8000ed" />}
+
         </View>
         </View>
+       
     )
 }
 const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: 15
+        paddingHorizontal: 15,
     },
     headerText: {
         textAlign: "center",
