@@ -5,6 +5,7 @@ import SignUp from "./Screens/SignUp";
 import Deshboard from "./Screens/Deshboard";
 import OtpScreen from "./Screens/OtpScreen";
 import ContactInfo from "./Screens/contact";
+import UserInfo from "./Screens/Userinfo";
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -14,6 +15,7 @@ const ScreenContainer = () =>{
     return(
     <NavigationContainer>
     <Stack.Navigator>
+      <Stack.Screen name="User info" component={UserInfo} />
       <Stack.Screen name="ContactInfo" component={ContactInfo} />
       <Stack.Screen name="OTP" component={OtpScreen} />
       <Stack.Screen name="Login" component={Login} />

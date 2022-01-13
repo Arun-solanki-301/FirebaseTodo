@@ -21,7 +21,15 @@ const ContactInfo = ({ navigation }) => {
     }
     const usersCollection = firestore().collection('Users');
     const handleFormSubmit = () => {
-            usersCollection.doc(user.unique).set(user)
+        try{
+
+            if(user.username && user.email && user.address && user.phone && user.unique){
+                usersCollection.doc(user.unique).set(user)
+            }
+        }
+        catch(error){
+            console.log(error)
+        }
 
     }
     const getDataFromFireStore = async () =>{
