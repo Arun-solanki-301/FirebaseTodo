@@ -32,7 +32,7 @@ const Deshboard = ({navigation})=>{
     }
     
     
-    console.log(data)
+    // console.log(data)
 
     const PostDataToFirebase = async () => {
         const response = await axios.post(Url , JSON.stringify(

@@ -32,13 +32,6 @@ const ContactInfo = ({ navigation }) => {
         }
 
     }
-    const getDataFromFireStore = async () =>{
-        const res = await usersCollection.get()
-        res.forEach((rest)=>{
-            console.log(rest._data)
-        })
-
-    }
     const deletedatafromfirestore = ()=>{
         try{
             usersCollection.doc('heXiBcI9u4QOFPJyRg9p').delete()
@@ -59,9 +52,9 @@ const ContactInfo = ({ navigation }) => {
             <View style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
             <TouchableOpacity style={styles.FormBtn} onPress={handleFormSubmit}><Text style={styles.FormBtnText}>Submit</Text></TouchableOpacity>
             </View>
-            <View style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
+            {/* <View style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
             <TouchableOpacity style={styles.FormBtn} onPress={getDataFromFireStore}><Text style={styles.FormBtnText}>get data</Text></TouchableOpacity>
-            </View>
+            </View> */}
             <View style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
             <TouchableOpacity style={styles.FormBtn} onPress={deletedatafromfirestore}><Text style={styles.FormBtnText}>delete data</Text></TouchableOpacity>
             </View>
